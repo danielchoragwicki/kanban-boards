@@ -104,7 +104,12 @@
     <Compile Include="Migrations\201901011729562_PopulatePeopleTable.Designer.cs">
       <DependentUpon>201901011729562_PopulatePeopleTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901012036366_AddedCardsTable.cs" />
+    <Compile Include="Migrations\201901012036366_AddedCardsTable.Designer.cs">
+      <DependentUpon>201901012036366_AddedCardsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901011729562_PopulatePeopleTable.resx">
       <DependentUpon>201901011729562_PopulatePeopleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901012036366_AddedCardsTable.resx">
+      <DependentUpon>201901012036366_AddedCardsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
