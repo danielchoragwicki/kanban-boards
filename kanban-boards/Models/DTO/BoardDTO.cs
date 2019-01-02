@@ -5,19 +5,17 @@ using System.Web;
 
 namespace kanban_boards.Models.DTO
 {
-    public class KanbanListDTO
+    public class BoardDTO
     {
 
-        public KanbanListDTO()
+        public BoardDTO()
         {
-            Cards = new HashSet<Card>();
+            KanbanLists = new HashSet<KanbanList>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BoardId { get; set; }
-
-        public ICollection<Card> Cards { get; set; }
-
+        public string Theme { get; set; }
+        public ICollection<KanbanList> KanbanLists { get; set; }
     }
 }

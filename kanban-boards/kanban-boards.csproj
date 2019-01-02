@@ -96,6 +96,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\KanbanListsController.cs" />
     <Compile Include="Controllers\API\PeopleController.cs" />
@@ -119,8 +120,16 @@
     <Compile Include="Migrations\201901012110327_AddedKanbanListTable.Designer.cs">
       <DependentUpon>201901012110327_AddedKanbanListTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901022007546_AddedBoardsTable.cs" />
+    <Compile Include="Migrations\201901022007546_AddedBoardsTable.Designer.cs">
+      <DependentUpon>201901022007546_AddedBoardsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\DTO\BoardDTO.cs" />
+    <Compile Include="Models\DTO\CardDTO.cs" />
+    <Compile Include="Models\DTO\KanbanListDTO.cs" />
     <Compile Include="Models\KanbanList.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901012110327_AddedKanbanListTable.resx">
       <DependentUpon>201901012110327_AddedKanbanListTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901022007546_AddedBoardsTable.resx">
+      <DependentUpon>201901022007546_AddedBoardsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
