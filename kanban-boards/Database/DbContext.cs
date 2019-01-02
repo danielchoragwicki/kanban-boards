@@ -16,5 +16,6 @@ namespace kanban_boards.Database
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Card> Cards { get; set; }
 
+        public virtual DbSet<KanbanList> KanbanLists { get; set; }
     }
 }

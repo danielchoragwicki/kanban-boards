@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\KanbanListsController.cs" />
     <Compile Include="Controllers\API\PeopleController.cs" />
     <Compile Include="Database\DbContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -108,8 +109,13 @@
     <Compile Include="Migrations\201901012036366_AddedCardsTable.Designer.cs">
       <DependentUpon>201901012036366_AddedCardsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901012110327_AddedKanbanListTable.cs" />
+    <Compile Include="Migrations\201901012110327_AddedKanbanListTable.Designer.cs">
+      <DependentUpon>201901012110327_AddedKanbanListTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\KanbanList.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901012036366_AddedCardsTable.resx">
       <DependentUpon>201901012036366_AddedCardsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901012110327_AddedKanbanListTable.resx">
+      <DependentUpon>201901012110327_AddedKanbanListTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
