@@ -9,13 +9,15 @@ namespace kanban_boards.Database
 {
     public class DbContext : System.Data.Entity.DbContext
     {
+        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Card> Cards { get; set; }
+        public virtual DbSet<KanbanList> KanbanLists { get; set; }
+
+
         public DbContext()
         {
             
         }
-        public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<Card> Cards { get; set; }
 
-        public virtual DbSet<KanbanList> KanbanLists { get; set; }
     }
 }
