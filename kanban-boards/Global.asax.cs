@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using AutoMapper;
+using kanban_boards.App_Start;
 
 namespace kanban_boards
 {
@@ -12,6 +14,9 @@ namespace kanban_boards
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            Mapper.Initialize(cfg => {
+                cfg.AddProfile<MappingProfile>();
+            });
         }
     }
 }
