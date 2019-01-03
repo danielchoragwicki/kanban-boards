@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201901022007546_AddedBoardsTable.Designer.cs">
       <DependentUpon>201901022007546_AddedBoardsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901032039179_PopulateTables.cs" />
+    <Compile Include="Migrations\201901032039179_PopulateTables.Designer.cs">
+      <DependentUpon>201901032039179_PopulateTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Card.cs" />
@@ -163,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901022007546_AddedBoardsTable.resx">
       <DependentUpon>201901022007546_AddedBoardsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901032039179_PopulateTables.resx">
+      <DependentUpon>201901032039179_PopulateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
