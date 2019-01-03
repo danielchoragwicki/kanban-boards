@@ -10,12 +10,12 @@ namespace kanban_boards.Models.DTO
 
         public BoardDTO()
         {
-            KanbanLists = new HashSet<KanbanList>();
+            KanbanLists = new HashSet<KanbanListDTO>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Theme { get; set; }
-        public ICollection<KanbanList> KanbanLists { get; set; }
+        public ICollection<KanbanListDTO> KanbanLists { get; set; }
     }
 }

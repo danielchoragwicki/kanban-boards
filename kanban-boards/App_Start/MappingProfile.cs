@@ -13,6 +13,8 @@ namespace kanban_boards.App_Start
         public MappingProfile()
         {
             CreateMap<KanbanList, KanbanListDTO>().ReverseMap();
+            CreateMap<Card, CardDTO>().ReverseMap();
+            CreateMap<Board, BoardDTO>().ReverseMap();
         }
     }
 }

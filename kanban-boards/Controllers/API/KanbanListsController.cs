@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using kanban_boards.Database;
 using kanban_boards.Models;
+using kanban_boards.Models.DTO;
 
 namespace kanban_boards.Controllers.API
 {
@@ -22,38 +23,49 @@ namespace kanban_boards.Controllers.API
         private Database.DbContext db = new Database.DbContext();
 
         // GET: api/KanbanLists
-        public IQueryable<KanbanList> GetKanbanLists()
+        public List<KanbanListDTO> GetKanbanLists()
         {
-            return db.KanbanLists;
+            var listOfKanbanLists = db.KanbanLists.ToList();
+            var listOfKanbanDtos = new List<KanbanListDTO>();
+
+            foreach (var kanbanList in listOfKanbanLists)
+            {
+                listOfKanbanDtos
+                    .Add(AutoMapper.Mapper.Map<KanbanListDTO>(kanbanList)); 
+            }
+
+            return listOfKanbanDtos;
         }
 
         // GET: api/KanbanLists/5
-        [ResponseType(typeof(KanbanList))]
+        [ResponseType(typeof(KanbanListDTO))]
         public IHttpActionResult GetKanbanList(int id)
         {
-            KanbanList kanbanList = db.KanbanLists.Find(id);
+            var kanbanList = db.KanbanLists.Find(id);
             if (kanbanList == null)
             {
                 return NotFound();
             }
 
-            return Ok(kanbanList);
+            var kanbanListDto = AutoMapper.Mapper.Map<KanbanListDTO>(kanbanList);
+            return Ok(kanbanListDto);
         }
 
         // PUT: api/KanbanLists/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKanbanList(int id, KanbanList kanbanList)
+        public IHttpActionResult PutKanbanList(int id, KanbanListDTO kanbanListDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != kanbanList.Id)
+            if (id != kanbanListDto.Id)
             {
                 return BadRequest();
             }
 
+            var kanbanList = AutoMapper.Mapper.Map<KanbanList>(kanbanListDto);
             db.Entry(kanbanList).State = EntityState.Modified;
 
             try
@@ -76,14 +88,15 @@ namespace kanban_boards.Controllers.API
         }
 
         // POST: api/KanbanLists
-        [ResponseType(typeof(KanbanList))]
-        public IHttpActionResult PostKanbanList(KanbanList kanbanList)
+        [ResponseType(typeof(KanbanListDTO))]
+        public IHttpActionResult PostKanbanList(KanbanListDTO kanbanListDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var kanbanList = AutoMapper.Mapper.Map<KanbanList>(kanbanListDto);
             db.KanbanLists.Add(kanbanList);
             db.SaveChanges();
 

@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\BoardsController.cs" />
+    <Compile Include="Controllers\API\CardsController.cs" />
     <Compile Include="Controllers\API\KanbanListsController.cs" />
     <Compile Include="Controllers\API\PeopleController.cs" />
     <Compile Include="Database\DbContext.cs" />
