@@ -1,0 +1,50 @@
+@mixin flex($center: both) {
+    display: flex;
+    flex-wrap: wrap;
+    @if $center == 'vertical' {
+        align-items: center;
+      }
+      @else if $center == 'horizontal' {
+        justify-content: center;
+      }
+      @else if $center == 'both' {
+        justify-content: center;
+        align-items: center;
+      }
+}
+
+@mixin transition($one: all, $two: .2s, $three: ease) {
+  transition: $one $two $three;
+}
+
+@mixin events {
+  &:hover {
+    @content;
+  }
+  &:active {
+    @content;
+  }
+  &:focus {
+    outline: 0;
+    @content;
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(
+      type-of($raw-query) == 'string',
+      unquote($raw-query),
+      inspect($raw-query)
+    );
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}

@@ -1,0 +1,36 @@
+.new-list {
+    padding-right: 60px;
+    @include respond-to(xs) {
+        padding-right: 25px;
+    }
+    &__input {
+        width: 100%;
+        background: none;
+        color: $white;
+        font-weight: 600;
+        border: 3px solid $white;
+        border-radius: $border-radius;
+        padding: 10px 15px;
+        font-size: 18px;
+        opacity: .5;
+        @include transition;
+        @include events {
+            opacity: 1;
+        }
+        &::placeholder {
+            color: $white;
+        }
+        &::-webkit-input-placeholder { 
+            color: $white;
+          }
+        &::-moz-placeholder { 
+                color: $white;
+          }
+        &:-ms-input-placeholder { 
+            color: $white;
+          }
+        &:-moz-placeholder { 
+            color: $white;
+          }
+    }
+}
