@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
+using kanban_boards.Repository;
+using kanban_boards.UnitOfWork;
+using Unity;
+using WebApiDepInject.Models;
 
 namespace kanban_boards
 {
@@ -10,6 +15,9 @@ namespace kanban_boards
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            var container = new UnityContainer();
+            container.RegisterType<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

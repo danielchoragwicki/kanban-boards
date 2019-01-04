@@ -7,7 +7,7 @@ using kanban_boards.Repository.ModelRepositories;
 
 namespace kanban_boards.UnitOfWork
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         ICardRepository Cards { get; }
         IKanbanListRepository KanbanLists { get; }

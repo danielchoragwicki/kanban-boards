@@ -7,7 +7,7 @@ using kanban_boards.Models;
 
 namespace kanban_boards.Repository.ModelRepositories
 {
-    interface ICardRepository : IRepository<Card>
+    public interface ICardRepository : IRepository<Card>
     {
         //Add specific contracts related to dbo.Cards
     }
