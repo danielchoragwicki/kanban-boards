@@ -52,3 +52,118 @@ export const move = (source, destination, droppableSource, droppableDestination)
 
   return result
 };
+
+
+export const mapBoards = boards => {
+  let mapBoards = boards.map(board => {
+    const mapBoardItem = {
+      id: board.Id.toString(),
+      name: board.Name,
+      theme: board.Theme,
+      lists: board.KanbanLists.map(list => {
+        const mapListItem = {
+          id: list.Id.toString(),
+          name: list.Name,
+          boardId: list.boardId,
+          items: list.Cards.map(card => {
+            const mapCard = {
+              id: card.Id.toString(),
+              name: card.Name,
+              desc: card.Descritpion,
+              startDate: card.StartDate,
+              endDate: card.EndDate,
+            }
+            return mapCard
+          }),
+        }
+        return mapListItem
+      }),
+    }
+    return mapBoardItem
+  })
+  return mapBoards
+}
+
+export const mapBoard = board => {
+  const mapBoardItem = {
+    id: board.Id.toString(),
+    name: board.Name,
+    theme: board.Theme,
+    lists: board.KanbanLists.map(list => {
+      const mapListItem = {
+        id: list.Id.toString(),
+        name: list.Name,
+        boardId: list.boardId,
+        items: list.Cards.map(card => {
+          const mapCard = {
+            id: card.Id.toString(),
+            name: card.Name,
+            desc: card.Descritpion,
+            startDate: card.StartDate,
+            endDate: card.EndDate,
+          }
+          return mapCard
+        }),
+      }
+      return mapListItem
+    }),
+  }
+  return mapBoardItem
+}
+
+// export const mapBoardsToApi = boards => {
+//   let mapBoardsToApi = boards.map(board => {
+//     const mapBoardItem = {
+//       Id: board.id,
+//       Name: board.name,
+//       Theme: board.theme,
+//       KanbanLists: board.lists.map(list => {
+//         const mapListItem = {
+//           Id: list.id,
+//           Name: list.name,
+//           boardId: list.boardId,
+//           Cards: list.items.map(card => {
+//             const mapCard = {
+//               Id: card.id,
+//               Name: card.name,
+//               Descritpion: card.desc,
+//               StartDate: card.startDate,
+//               EndDate: card.endDate,
+//             }
+//             return mapCard
+//           }),
+//         }
+//         return mapListItem
+//       }),
+//     }
+//     return mapBoardItem
+//   })
+//   return mapBoardsToApi
+// }
+
+export const mapBoardToApi = board => {
+  const mapBoardItem = {
+    Id: board.id,
+    Name: board.name,
+    Theme: board.theme,
+    KanbanLists: board.lists.map(list => {
+      const mapListItem = {
+        Id: list.id,
+        Name: list.name,
+        boardId: list.boardId,
+        Cards: list.items.map(card => {
+          const mapCard = {
+            Id: card.id,
+            Name: card.name,
+            Descritpion: card.desc,
+            StartDate: card.startDate,
+            EndDate: card.endDate,
+          }
+          return mapCard
+        }),
+      }
+      return mapListItem
+    }),
+  }
+  return mapBoardItem
+}

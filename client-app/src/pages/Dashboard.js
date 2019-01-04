@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import AddBoardInput from '../components/inputs/AddBoardInput'
 import BoardsList from '../components/dashboard/BoardsList'
 import { generateId } from '../utils/helpers'
-import { deleteBoards } from '../utils/service'
+// import { deleteBoards } from '../utils/service'
 
 class Dashboard extends Component {
   state = {
@@ -66,7 +66,7 @@ class Dashboard extends Component {
     alert('Empty input. Add some text.')
   }
   handleDeleteLocal = e => {
-    deleteBoards()
+    // deleteBoards()
     window.location.reload()
   }
   render () {
