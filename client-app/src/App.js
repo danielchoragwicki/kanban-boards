@@ -9,11 +9,12 @@ import './styles/styles.css';
 
 class App extends Component {
   state = {
-    boards: []
+    boards: [],
+    isLoading: true,
   }
   componentDidMount() {
     loadBoards()
-      .then(boards => this.setState({boards}))
+      .then(boards => this.setState({boards, isLoading: false}))
   }
   // handleCreate = newBoard => {
   //   const updatedBoards = addItem(this.state.boards, newBoard)
@@ -54,7 +55,12 @@ class App extends Component {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Switch>
-                <Route exact path='/' render={props => (<Dashboard 
+                <Route exact path='/' render={props => (this.state.isLoading ? <div className="loader__wrapper"><div className="loader">
+                  <div className="loader__item"></div>
+                  <div className="loader__item"></div>
+                  <div className="loader__item"></div>
+                  <div className="loader__item"></div>
+                </div></div> : <Dashboard 
                     handleCreate={this.handleCreate} 
                     boards={this.state.boards} 
                     {...props}/>)
