@@ -1,4 +1,11 @@
-export const generateId = () => Math.random().toString(36).substr(2, 16)
+// export const generateId = () => Math.random().toString(36).substr(2, 16)
+
+export const generateId = () => {
+  const a = new Date().valueOf();
+  const str_a = a.toString();
+  const result = Number(str_a.slice(0, 9));
+  return result
+}
 
 export const findById = (id, list) => list.find(item => item.id === id)
 
@@ -57,17 +64,17 @@ export const move = (source, destination, droppableSource, droppableDestination)
 export const mapBoards = boards => {
   let mapBoards = boards.map(board => {
     const mapBoardItem = {
-      id: board.Id.toString(),
+      id: board.Id,
       name: board.Name,
       theme: board.Theme,
       lists: board.KanbanLists.map(list => {
         const mapListItem = {
-          id: list.Id.toString(),
+          id: list.Id,
           name: list.Name,
-          boardId: list.boardId,
+          boardId: board.Id,
           items: list.Cards.map(card => {
             const mapCard = {
-              id: card.Id.toString(),
+              id: card.Id,
               name: card.Name,
               desc: card.Descritpion,
               startDate: card.StartDate,
@@ -86,17 +93,17 @@ export const mapBoards = boards => {
 
 export const mapBoard = board => {
   const mapBoardItem = {
-    id: board.Id.toString(),
+    id: board.Id,
     name: board.Name,
     theme: board.Theme,
     lists: board.KanbanLists.map(list => {
       const mapListItem = {
-        id: list.Id.toString(),
+        id: list.Id,
         name: list.Name,
-        boardId: list.boardId,
+        boardId: board.Id,
         items: list.Cards.map(card => {
           const mapCard = {
-            id: card.Id.toString(),
+            id: card.Id,
             name: card.Name,
             desc: card.Descritpion,
             startDate: card.StartDate,
@@ -150,7 +157,7 @@ export const mapBoardToApi = board => {
       const mapListItem = {
         Id: list.id,
         Name: list.name,
-        boardId: list.boardId,
+        boardId: board.Id,
         Cards: list.items.map(card => {
           const mapCard = {
             Id: card.id,

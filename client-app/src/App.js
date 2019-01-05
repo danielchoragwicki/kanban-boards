@@ -61,9 +61,12 @@ class App extends Component {
                 }/>
                 <Route path="/board/:id" 
                 render={props => {
-                    const ifCorrectID = findById(props.match.params.id, this.state.boards)
+                    console.log(props.match.params.id)
+                    const ifCorrectID = findById(parseInt(props.match.params.id), this.state.boards)
+                    console.log(this.state.boards)
+                    console.log(ifCorrectID)
                     return (ifCorrectID 
-                      ? <Board id={props.match.params.id} 
+                      ? <Board id={parseInt(props.match.params.id)} 
                           board={ifCorrectID} 
                           handleRemove={this.handleRemove} 
                           updatedBoard={this.updatedBoard} /> 

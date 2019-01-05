@@ -86,6 +86,7 @@ class Board extends Component {
                     handleUpdate={this.handleUpdate} />
                 <BoardLists 
                     id={this.props.id}
+                    board={this.props.board}
                     lists={this.state.board.lists} 
                     handleListsUpdate={this.handleListsUpdate} />
                 <div className="theme-background"></div>
@@ -96,7 +97,7 @@ class Board extends Component {
 
 Board.propTypes = {
   board: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   handleRemove: PropTypes.func.isRequired,
   updatedBoard: PropTypes.func.isRequired,
 }

@@ -13,6 +13,7 @@ class List extends Component {
   state = {
     list: {
       name: '',
+      boardId: '',
       items: []
     },
     newCard: {
@@ -26,6 +27,7 @@ class List extends Component {
     this.setState({
       list: {
         name: this.props.name,
+        boardId: this.props.board.id,
         items: this.props.items
       }
     })
@@ -160,7 +162,7 @@ class List extends Component {
   }
 }
 List.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     items: PropTypes.array.isRequired,
     name: PropTypes.string.isRequired,
     handleRemove: PropTypes.func.isRequired,

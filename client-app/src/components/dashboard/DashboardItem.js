@@ -28,7 +28,7 @@ const DashboardItem = ({id, name, lists, theme}) => {
 }
 
 DashboardItem.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     lists: PropTypes.array.isRequired,
     theme: PropTypes.string.isRequired

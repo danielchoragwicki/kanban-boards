@@ -15,7 +15,7 @@ class BoardLists extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const newList = {
-      "id": generateId(),
+      "boardId": this.props.board.id,
       "name": this.state.newListName,
       "items": []
     }
@@ -96,7 +96,7 @@ class BoardLists extends Component {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}>
-                          <List handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} {...list}/>
+                          <List board={this.props.board} handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} {...list}/>
                         </div>
                       )}
                     </Draggable>
@@ -116,7 +116,7 @@ class BoardLists extends Component {
 } 
 
 BoardLists.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     lists: PropTypes.array.isRequired,
     handleListsUpdate: PropTypes.func.isRequired
 }

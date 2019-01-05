@@ -101,7 +101,7 @@ class BoardHeader extends React.Component {
 
 BoardHeader.propTypes = {
     board: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     handleRemove: PropTypes.func.isRequired
 }
