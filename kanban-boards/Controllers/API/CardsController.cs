@@ -11,17 +11,22 @@ using System.Web.Http.Description;
 using kanban_boards.Database;
 using kanban_boards.Models;
 using kanban_boards.Models.DTO;
+using kanban_boards.UnitOfWork;
 
 namespace kanban_boards.Controllers.API
 {
     public class CardsController : ApiController
     {
-        private Database.DbContext db = new Database.DbContext();
+        private IUnitOfWork _unitOfWork;
+        public CardsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: api/Cards
         public List<CardDTO> GetCards()
         {
-            var cardsList = db.Cards.ToList();
+            var cardsList = _unitOfWork.Cards.GetAll();
             var cardsDtoList = new List<CardDTO>();
 
             foreach (var card in cardsList)
@@ -37,7 +42,7 @@ namespace kanban_boards.Controllers.API
         [ResponseType(typeof(CardDTO))]
         public IHttpActionResult GetCard(int id)
         {
-            var card = db.Cards.Find(id);
+            var card = _unitOfWork.Cards.Get(id);
             if (card == null)
             {
                 return NotFound();
@@ -62,11 +67,11 @@ namespace kanban_boards.Controllers.API
             }
 
             var card = AutoMapper.Mapper.Map<Card>(cardDto);
-            db.Entry(card).State = EntityState.Modified;
+            _unitOfWork.Cards.Put(card);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -93,8 +98,8 @@ namespace kanban_boards.Controllers.API
             }
 
             var card = AutoMapper.Mapper.Map<Card>(cardDto);
-            db.Cards.Add(card);
-            db.SaveChanges();
+            _unitOfWork.Cards.Add(card);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = card.Id }, card);
         }
@@ -103,14 +108,14 @@ namespace kanban_boards.Controllers.API
         [ResponseType(typeof(Card))]
         public IHttpActionResult DeleteCard(int id)
         {
-            var card = db.Cards.Find(id);
+            var card = _unitOfWork.Cards.Get(id);
             if (card == null)
             {
                 return NotFound();
             }
 
-            db.Cards.Remove(card);
-            db.SaveChanges();
+            _unitOfWork.Cards.Delete(card);
+            _unitOfWork.Complete();
 
             return Ok(card);
         }
@@ -119,14 +124,14 @@ namespace kanban_boards.Controllers.API
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool CardExists(int id)
         {
-            return db.Cards.Count(e => e.Id == id) > 0;
+            return _unitOfWork.Cards.Get(id) != null;
         }
     }
 }
