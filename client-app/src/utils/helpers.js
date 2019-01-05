@@ -76,7 +76,8 @@ export const mapBoards = boards => {
             const mapCard = {
               id: card.Id,
               name: card.Name,
-              desc: card.Descritpion,
+              KanbanListId: card.KanbanListId,
+              desc: card.Description,
               startDate: card.StartDate,
               endDate: card.EndDate,
             }
@@ -105,7 +106,8 @@ export const mapBoard = board => {
           const mapCard = {
             id: card.Id,
             name: card.Name,
-            desc: card.Descritpion,
+            KanbanListId: card.KanbanListId,
+            desc: card.Description,
             startDate: card.StartDate,
             endDate: card.EndDate,
           }
@@ -117,6 +119,7 @@ export const mapBoard = board => {
   }
   return mapBoardItem
 }
+
 
 // export const mapBoardsToApi = boards => {
 //   let mapBoardsToApi = boards.map(board => {
@@ -133,7 +136,7 @@ export const mapBoard = board => {
 //             const mapCard = {
 //               Id: card.id,
 //               Name: card.name,
-//               Descritpion: card.desc,
+//               Description: card.desc,
 //               StartDate: card.startDate,
 //               EndDate: card.endDate,
 //             }
@@ -157,12 +160,13 @@ export const mapBoardToApi = board => {
       const mapListItem = {
         Id: list.id,
         Name: list.name,
-        boardId: board.Id,
+        BoardId: list.boardId,
         Cards: list.items.map(card => {
           const mapCard = {
             Id: card.id,
             Name: card.name,
-            Descritpion: card.desc,
+            KanbanListId: card.KanbanListId,
+            Description: card.desc,
             StartDate: card.startDate,
             EndDate: card.endDate,
           }
@@ -173,4 +177,37 @@ export const mapBoardToApi = board => {
     }),
   }
   return mapBoardItem
+}
+  
+export const mapListToApi = list => {
+  const mapListItem = {
+    Id: list.id,
+    Name: list.name,
+    BoardId: list.boardId,
+    Cards: list.items.map(card => {
+      const mapCard = {
+        Id: card.id,
+        Name: card.name,
+        KanbanListId: card.KanbanListId,
+        Description: card.desc,
+        StartDate: card.startDate,
+        EndDate: card.endDate,
+      }
+      return mapCard
+    }),
+  }
+  return mapListItem
+}
+
+export const mapCardToApi = card => {
+    const mapCard = {
+      Id: card.id,
+      Name: card.name,
+      KanbanListId: card.KanbanListId,
+      Description: card.desc,
+      StartDate: card.startDate,
+      EndDate: card.endDate,
+    }
+    console.log(mapCard)
+    return mapCard
 }

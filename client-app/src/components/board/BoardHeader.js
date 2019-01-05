@@ -73,7 +73,7 @@ class BoardHeader extends React.Component {
                         <ThemeButton currentTheme={this.state.currentBoard.theme} handleRadioChange={this.handleRadioChange} />
                         <DeleteButton handleRemove={() => handleRemove(id)} />
                     </div>
-                    <div className="board-header__display">
+                    {/* <div className="board-header__display">
                         <label className={`display display--kanban${display === "kanban" ? ' active' : ''}`}>
                             <input type="checkbox" onChange={handleDisplayChange} checked={display === "kanban"} value="kanban"/>
                             <span className="display__line"></span>
@@ -92,7 +92,7 @@ class BoardHeader extends React.Component {
                             <span className="display__line"></span>
                             <span className="display__line"></span>
                         </label>
-                    </div>
+                    </div> */}
                 </header>
             </div>
         ); 

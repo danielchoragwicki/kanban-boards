@@ -65,10 +65,10 @@ class Dashboard extends Component {
     e.preventDefault()
     alert('Empty input. Add some text.')
   }
-  handleDeleteLocal = e => {
-    // deleteBoards()
-    window.location.reload()
-  }
+  // handleDeleteLocal = e => {
+  //   // deleteBoards()
+  //   window.location.reload()
+  // }
   render () {
     const { currentBoard, errSubmit, isInputOpen } = this.state
     const { boards } = this.props
@@ -77,7 +77,7 @@ class Dashboard extends Component {
       : this.handleSubmit
     return (
       <div className="dashboard">
-          <button className="delete-local" onClick={this.handleDeleteLocal}>Delete localStorage</button>
+          {/* <button className="delete-local" onClick={this.handleDeleteLocal}>Delete localStorage</button> */}
           <BoardsList 
             boards={boards} 
             handleClick={this.handleClick} />

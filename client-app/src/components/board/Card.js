@@ -10,6 +10,7 @@ class Card extends Component {
         desc: '', 
         startDate: '', 
         endDate: '',
+        KanbanListId: '',
         isEditable: false,
         editCard: {
             name: '', 
@@ -21,8 +22,10 @@ class Card extends Component {
     componentDidMount() {
         this.setState({
             ...this.props,
+            KanbanListId: this.props.listid,
             editCard: {
-                ...this.props
+                ...this.props,
+                KanbanListId: this.props.listid,
             }
         })
     }  
@@ -52,7 +55,8 @@ class Card extends Component {
     handleSubmit = e => {
         e.preventDefault()
         const updatedCard = {
-            ...this.state.editCard
+            ...this.state.editCard,
+            KanbanListId: this.props.listid,
         }
         this.setState({
             ...updatedCard,
@@ -70,9 +74,9 @@ class Card extends Component {
                         {desc && <FontAwesomeIcon className="card__icon card__icon--desc" icon={faAlignLeft}/>}
                         {(startDate || endDate) && <p className="card__dates">
                             <FontAwesomeIcon className="card__icon card__icon--calendar" icon={faCalendarAlt}/>
-                            <span className="card__date">{startDate ? startDate : '??'}</span>
+                            <span className="card__date">{startDate ? startDate.slice(0, 10) : '??'}</span>
                             <span>-</span>
-                            <span className="card__date">{endDate ? endDate : '??'}</span>
+                            <span className="card__date">{endDate ? endDate.slice(0, 10) : '??'}</span>
                         </p>}
                     </div>
                     <button className="card__edit-button" onClick={this.handleClick}><FontAwesomeIcon className="card__icon" icon={faPencilAlt}/></button>

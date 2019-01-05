@@ -14,6 +14,7 @@ class CardEdit extends Component {
     }
     render() {
         const {id, editCard, handleRemove, handleChange, handleSubmit, handleClick} = this.props
+        console.log(editCard)
         return(
             <div className="card-edit">
                 <div className="card-edit__inner">
@@ -24,11 +25,11 @@ class CardEdit extends Component {
                             <textarea placeholder="Descritpion..." className="card-edit__desc" onChange={e => handleChange(e, 'desc')} value={editCard.desc}/>
                             <div className="card-edit__date">
                                 Start:
-                                <input type="date" onChange={e => handleChange(e, 'startDate')} value={editCard.startDate}/>
+                                <input type="date" onChange={e => handleChange(e, 'startDate')} value={editCard.startDate && editCard.startDate.slice(0, 10)}/>
                             </div>
                             <div className="card-edit__date">
                                 End:
-                                <input type="date" onChange={e => handleChange(e, 'endDate')} value={editCard.endDate}/>
+                                <input type="date" onChange={e => handleChange(e, 'endDate')} value={editCard.endDate && editCard.endDate.slice(0, 10)}/>
                             </div>
                             <div className="card-edit__buttons">
                                 <SaveButton handleClick={handleSubmit} />

@@ -8,6 +8,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHandPaper } from '@fortawesome/free-solid-svg-icons'
 import { Scrollbars } from 'react-custom-scrollbars';
+import { createCard, saveCard, destroycard } from './../../utils/service';
 
 class List extends Component {
   state = {
@@ -20,7 +21,8 @@ class List extends Component {
       name: '',
       desc: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      KanbanListId: ''
     }
   }
   componentDidMount() {
@@ -51,6 +53,7 @@ class List extends Component {
     }))
   }
   handleCardRemove = id => {
+    destroycard(id)
     const updatedCards = removeItem(this.props.items, id)
     const updatedList = {
         ...this.state.list,
@@ -66,6 +69,7 @@ class List extends Component {
     this.props.handleListChange(updatedList);
   }
   handleCardEdit = card => {
+    saveCard(card)
     const updatedCards = updateList(this.props.items, card);
     const updatedList = {
       ...this.state.list,
@@ -87,15 +91,16 @@ class List extends Component {
       id: this.props.id,
       name: this.state.list.name
     }
-    this.props.handleListChange(updatedList);
+    this.props.handleListChange(updatedList)
   }
   handleCardSubmit = e => {
     e.preventDefault()
     const newCard = {
       ...this.state.newCard,
-      id: generateId(),
+      KanbanListId: this.props.listid,
       name: this.state.newCard.name,
     }
+    createCard(newCard)
     const updatedItems = addItem(this.state.list.items, newCard)
     const updatedList = {
       ...this.state.list,
@@ -142,7 +147,7 @@ class List extends Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         style={provided.draggableProps.style}>
-                        <Card key={card.id} {...card} handleCardRemove={this.handleCardRemove} handleCardEdit={this.handleCardEdit}/>
+                        <Card key={card.id} {...card} handleCardRemove={this.handleCardRemove} handleCardEdit={this.handleCardEdit} listid={ this.props.listid } />
                       </div>
                     )}
               </Draggable>

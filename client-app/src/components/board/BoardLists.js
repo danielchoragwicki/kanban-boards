@@ -4,6 +4,7 @@ import List from  './List'
 import NewList from './NewList'
 import { generateId, addItem, updateList, removeItem, findById, reorder, move } from '../../utils/helpers'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { createList, saveList, destroylist } from './../../utils/service';
 
 class BoardLists extends Component {
   state = {
@@ -19,15 +20,18 @@ class BoardLists extends Component {
       "name": this.state.newListName,
       "items": []
     }
+    createList(newList)
     this.setState({newListName: ''})
     const updatedLists = addItem(this.props.lists, newList);
     this.props.handleListsUpdate(updatedLists);
   }
   handleRemove = id => {
+    destroylist(id)
     const updatedLists = removeItem(this.props.lists, id);
     this.props.handleListsUpdate(updatedLists);
   }
   handleListChange = list => {
+    saveList(list)
     const updatedLists = updateList(this.props.lists, list);
     this.props.handleListsUpdate(updatedLists);
   }
@@ -56,7 +60,8 @@ class BoardLists extends Component {
           ...list,
           items: items
         }
-        this.handleListChange(newList)
+        // saveList(newList)
+        // this.handleListChange(newList)
     } else {
         const sourceList = findById(source.droppableId, this.props.lists)
         const destList = findById(destination.droppableId, this.props.lists)
@@ -74,8 +79,10 @@ class BoardLists extends Component {
           ...destList,
           items: result[destination.droppableId]
         }
-        this.handleListChange(newSourceList)
-        this.handleListChange(newDestList)
+        // this.handleListChange(newSourceList)
+        // saveList(newSourceList)
+        // this.handleListChange(newDestList)
+        // saveList(newDestList)
       }
   }
   render() {
@@ -96,7 +103,7 @@ class BoardLists extends Component {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}>
-                          <List board={this.props.board} handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} {...list}/>
+                          <List board={this.props.board} handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} listid={list.id} {...list}/>
                         </div>
                       )}
                     </Draggable>

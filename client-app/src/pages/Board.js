@@ -59,7 +59,7 @@ class Board extends Component {
             display: "default",
             newList: ''
         }))
-        this.props.updatedBoard(upadtedBoard)
+        // this.props.updatedBoard(upadtedBoard)
     }
     handleListsUpdate = lists => {
         const upadtedBoard = {
@@ -72,7 +72,7 @@ class Board extends Component {
                 lists: lists
             }
         })) 
-        this.props.updatedBoard(upadtedBoard)
+        // this.props.updatedBoard(upadtedBoard)
     }
     render() {
         return (

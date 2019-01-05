@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201901041949240_DatabaseConstraints.Designer.cs">
       <DependentUpon>201901041949240_DatabaseConstraints.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901050944510_OptionalNulLValuesInDatesColumns.cs" />
+    <Compile Include="Migrations\201901050944510_OptionalNulLValuesInDatesColumns.Designer.cs">
+      <DependentUpon>201901050944510_OptionalNulLValuesInDatesColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Card.cs" />
@@ -212,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901041949240_DatabaseConstraints.resx">
       <DependentUpon>201901041949240_DatabaseConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901050944510_OptionalNulLValuesInDatesColumns.resx">
+      <DependentUpon>201901050944510_OptionalNulLValuesInDatesColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
