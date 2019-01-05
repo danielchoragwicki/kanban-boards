@@ -11,21 +11,22 @@ using System.Web.Http.Description;
 using kanban_boards.Database;
 using kanban_boards.Models;
 using kanban_boards.Models.DTO;
+using kanban_boards.UnitOfWork;
 
 namespace kanban_boards.Controllers.API
 {
-    //TODO AutoMapper
-    //TODO Make DTO's
-    //TODO Make Controllers
-
     public class KanbanListsController : ApiController
     {
-        private Database.DbContext db = new Database.DbContext();
+        private IUnitOfWork _unitOfWork;
+        public KanbanListsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: api/KanbanLists
         public List<KanbanListDTO> GetKanbanLists()
         {
-            var listOfKanbanLists = db.KanbanLists.ToList();
+            var listOfKanbanLists = _unitOfWork.KanbanLists.GetAll();
             var listOfKanbanDtos = new List<KanbanListDTO>();
 
             foreach (var kanbanList in listOfKanbanLists)
@@ -41,7 +42,7 @@ namespace kanban_boards.Controllers.API
         [ResponseType(typeof(KanbanListDTO))]
         public IHttpActionResult GetKanbanList(int id)
         {
-            var kanbanList = db.KanbanLists.Find(id);
+            var kanbanList = _unitOfWork.KanbanLists.Get(id);
             if (kanbanList == null)
             {
                 return NotFound();
@@ -66,11 +67,11 @@ namespace kanban_boards.Controllers.API
             }
 
             var kanbanList = AutoMapper.Mapper.Map<KanbanList>(kanbanListDto);
-            db.Entry(kanbanList).State = EntityState.Modified;
+            _unitOfWork.KanbanLists.Put(kanbanList);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -97,8 +98,8 @@ namespace kanban_boards.Controllers.API
             }
 
             var kanbanList = AutoMapper.Mapper.Map<KanbanList>(kanbanListDto);
-            db.KanbanLists.Add(kanbanList);
-            db.SaveChanges();
+            _unitOfWork.KanbanLists.Add(kanbanList);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = kanbanList.Id }, kanbanList);
         }
@@ -107,14 +108,14 @@ namespace kanban_boards.Controllers.API
         [ResponseType(typeof(KanbanList))]
         public IHttpActionResult DeleteKanbanList(int id)
         {
-            KanbanList kanbanList = db.KanbanLists.Find(id);
+            KanbanList kanbanList = _unitOfWork.KanbanLists.Get(id);
             if (kanbanList == null)
             {
                 return NotFound();
             }
 
-            db.KanbanLists.Remove(kanbanList);
-            db.SaveChanges();
+            _unitOfWork.KanbanLists.Delete(kanbanList);
+            _unitOfWork.Complete();
 
             return Ok(kanbanList);
         }
@@ -123,14 +124,14 @@ namespace kanban_boards.Controllers.API
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool KanbanListExists(int id)
         {
-            return db.KanbanLists.Count(e => e.Id == id) > 0;
+            return _unitOfWork.KanbanLists.Get(id) != null;
         }
     }
 }

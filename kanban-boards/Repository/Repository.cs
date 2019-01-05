@@ -16,6 +16,11 @@ namespace kanban_boards.Repository
             this.Context = context;
         }
 
+        public void Put(TEnity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
         public void Add(TEnity entity)
         {
             Context.Set<TEnity>().Add(entity);

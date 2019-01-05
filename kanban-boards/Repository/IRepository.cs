@@ -15,6 +15,7 @@ namespace kanban_boards.Repository
 
         void Add(TEntity entity);
         void Delete(TEntity entity);
+        void Put(TEntity entity);
 
     }
 }

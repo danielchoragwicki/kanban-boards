@@ -8,20 +8,26 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AutoMapper;
 using kanban_boards.Database;
 using kanban_boards.Models;
 using kanban_boards.Models.DTO;
+using kanban_boards.UnitOfWork;
 
 namespace kanban_boards.Controllers.API
 {
     public class BoardsController : ApiController
     {
-        private Database.DbContext db = new Database.DbContext();
+        private IUnitOfWork _unitOfWork;
+        public BoardsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: api/Boards
         public List<BoardDTO> GetBoards()
         {
-            var boardsList = db.Boards.ToList();
+            var boardsList = _unitOfWork.Boards.GetAll();
             var boardsDtoList = new List<BoardDTO>();
 
             foreach (var board in boardsList)
@@ -34,37 +40,38 @@ namespace kanban_boards.Controllers.API
         }
 
         // GET: api/Boards/5
-        [ResponseType(typeof(Board))]
+        [ResponseType(typeof(BoardDTO))]
         public IHttpActionResult GetBoard(int id)
         {
-            Board board = db.Boards.Find(id);
+            Board board = _unitOfWork.Boards.Get(id);
             if (board == null)
             {
                 return NotFound();
             }
-
-            return Ok(board);
+            var boardDto = AutoMapper.Mapper.Map<BoardDTO>(board);
+            return Ok(boardDto);
         }
 
         // PUT: api/Boards/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBoard(int id, Board board)
+        public IHttpActionResult PutBoard(int id, BoardDTO boardDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != board.Id)
+            if (id != boardDto.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(board).State = EntityState.Modified;
+            var board = AutoMapper.Mapper.Map<Board>(boardDto);
+            _unitOfWork.Boards.Put(board);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -82,16 +89,16 @@ namespace kanban_boards.Controllers.API
         }
 
         // POST: api/Boards
-        [ResponseType(typeof(Board))]
-        public IHttpActionResult PostBoard(Board board)
+        [ResponseType(typeof(BoardDTO))]
+        public IHttpActionResult PostBoard(BoardDTO boardDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Boards.Add(board);
-            db.SaveChanges();
+            var board = AutoMapper.Mapper.Map<Board>(boardDto);
+            _unitOfWork.Boards.Add(board);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = board.Id }, board);
         }
@@ -100,14 +107,14 @@ namespace kanban_boards.Controllers.API
         [ResponseType(typeof(Board))]
         public IHttpActionResult DeleteBoard(int id)
         {
-            Board board = db.Boards.Find(id);
+            Board board = _unitOfWork.Boards.Get(id);
             if (board == null)
             {
                 return NotFound();
             }
 
-            db.Boards.Remove(board);
-            db.SaveChanges();
+            _unitOfWork.Boards.Delete(board);
+            _unitOfWork.Complete();
 
             return Ok(board);
         }
@@ -116,14 +123,14 @@ namespace kanban_boards.Controllers.API
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool BoardExists(int id)
         {
-            return db.Boards.Count(e => e.Id == id) > 0;
+            return _unitOfWork.Boards.Get(id) != null;
         }
     }
 }
