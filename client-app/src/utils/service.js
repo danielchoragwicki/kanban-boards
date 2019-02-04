@@ -1,20 +1,12 @@
 import { mapBoards, mapBoard, mapBoardToApi, mapListToApi, mapCardToApi } from './helpers'
 
-const baseUrl = "http://localhost:56935/api/"
+const baseUrl = "http://localhost:56935/api"
  
 export const loadBoards = () => {
     return fetch(`${baseUrl}/boards/`) 
         .then(res => res.json())
         .then(res => mapBoards(res))
 }
-
-// export const saveBoards = boards => {
-//     localStorage.setItem('boards', JSON.stringify(boards))
-// }
-
-// export const deleteBoards = () => {
-//   localStorage.clear()
-// }
 
 
 export const createBoard = item => {

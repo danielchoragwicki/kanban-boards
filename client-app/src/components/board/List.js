@@ -66,6 +66,7 @@ class List extends Component {
           items: updatedCards
       }
   }))
+  // this.porps.handleListChangeClient(updatedList);
     this.props.handleListChange(updatedList);
   }
   handleCardEdit = card => {
@@ -82,6 +83,7 @@ class List extends Component {
             items: updatedCards
         }
     }))
+    // this.porps.handleListChangeClient(updatedList);
     this.props.handleListChange(updatedList);
   }
   handleSubmit = e => {
@@ -91,6 +93,7 @@ class List extends Component {
       id: this.props.id,
       name: this.state.list.name
     }
+    // this.porps.handleListChangeClient(updatedList);
     this.props.handleListChange(updatedList)
   }
   handleCardSubmit = e => {
@@ -102,6 +105,8 @@ class List extends Component {
     }
     createCard(newCard)
     const updatedItems = addItem(this.state.list.items, newCard)
+    console.log(newCard)
+    console.log(updatedItems)
     const updatedList = {
       ...this.state.list,
       id: this.props.id,
@@ -117,6 +122,7 @@ class List extends Component {
           name: ''
       }
     }))
+    // this.porps.handleListChangeClient(updatedList);
     this.props.handleListChange(updatedList);
   }
   render() {

@@ -120,37 +120,6 @@ export const mapBoard = board => {
   return mapBoardItem
 }
 
-
-// export const mapBoardsToApi = boards => {
-//   let mapBoardsToApi = boards.map(board => {
-//     const mapBoardItem = {
-//       Id: board.id,
-//       Name: board.name,
-//       Theme: board.theme,
-//       KanbanLists: board.lists.map(list => {
-//         const mapListItem = {
-//           Id: list.id,
-//           Name: list.name,
-//           boardId: list.boardId,
-//           Cards: list.items.map(card => {
-//             const mapCard = {
-//               Id: card.id,
-//               Name: card.name,
-//               Description: card.desc,
-//               StartDate: card.startDate,
-//               EndDate: card.endDate,
-//             }
-//             return mapCard
-//           }),
-//         }
-//         return mapListItem
-//       }),
-//     }
-//     return mapBoardItem
-//   })
-//   return mapBoardsToApi
-// }
-
 export const mapBoardToApi = board => {
   const mapBoardItem = {
     Id: board.id,

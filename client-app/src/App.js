@@ -16,21 +16,6 @@ class App extends Component {
     loadBoards()
       .then(boards => this.setState({boards, isLoading: false}))
   }
-  // handleCreate = newBoard => {
-  //   const updatedBoards = addItem(this.state.boards, newBoard)
-  //   this.setState({boards: updatedBoards})
-  //   saveBoards(updatedBoards)
-  // }
-  // handleRemove = id => {
-  //   const updatedBoards = removeItem(this.state.boards, id)
-  //   this.setState({boards: updatedBoards})
-  //   saveBoards(updatedBoards)
-  // }
-  // updatedBoard = board => {
-  //   const upadtedBoard = updateList(this.state.boards, board)
-  //   this.setState({boards: upadtedBoard})
-  //   saveBoards(upadtedBoard)
-  // }
 
   handleCreate = newBoard => {
     const updatedBoards = addItem(this.state.boards, newBoard)
@@ -69,7 +54,7 @@ class App extends Component {
                 render={props => {
                     const ifCorrectID = findById(parseInt(props.match.params.id), this.state.boards)
                     return (ifCorrectID 
-                      ? <Board id={parseInt(props.match.params.id)} 
+                      ? <Board handleUpdateElement={ this.handleUpdateElement } id={parseInt(props.match.params.id)} 
                           board={ifCorrectID} 
                           handleRemove={this.handleRemove} 
                           updatedBoard={this.updatedBoard} /> 

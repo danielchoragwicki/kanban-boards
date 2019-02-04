@@ -4,7 +4,7 @@ import List from  './List'
 import NewList from './NewList'
 import { generateId, addItem, updateList, removeItem, findById, reorder, move } from '../../utils/helpers'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { createList, saveList, destroylist } from './../../utils/service';
+import { createList, saveList, destroylist, saveCard } from './../../utils/service';
 
 class BoardLists extends Component {
   state = {
@@ -35,9 +35,18 @@ class BoardLists extends Component {
     const updatedLists = updateList(this.props.lists, list);
     this.props.handleListsUpdate(updatedLists);
   }
+  handleListChangeClient = list => {
+    const updatedLists = updateList(this.props.lists, list);
+    this.props.handleListsUpdate(updatedLists);
+  }
   onDragEnd = result => {
     const { source, destination } = result;
-    
+    const sourceList = findById(source.droppableId, this.props.lists)
+    const acutalCard = findById(result.draggableId, sourceList.items)
+    // KanbanListId
+    acutalCard.KanbanListId = destination.droppableId
+    saveCard(acutalCard)
+
     if (!destination) {
         return;
     }
@@ -62,6 +71,8 @@ class BoardLists extends Component {
         }
         // saveList(newList)
         // this.handleListChange(newList)
+        const updatedLists = updateList(this.props.lists, newList);
+        this.props.handleListsUpdate(updatedLists);
     } else {
         const sourceList = findById(source.droppableId, this.props.lists)
         const destList = findById(destination.droppableId, this.props.lists)
@@ -79,10 +90,15 @@ class BoardLists extends Component {
           ...destList,
           items: result[destination.droppableId]
         }
+        // console.log(result)
         // this.handleListChange(newSourceList)
         // saveList(newSourceList)
         // this.handleListChange(newDestList)
         // saveList(newDestList)
+        const updatedLists = updateList(this.props.lists, newSourceList);
+        this.props.handleListsUpdate(updatedLists);
+        const updatedListsNew = updateList(this.props.lists, newDestList);
+        this.props.handleListsUpdate(updatedListsNew);
       }
   }
   render() {
@@ -103,7 +119,7 @@ class BoardLists extends Component {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}>
-                          <List board={this.props.board} handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} listid={list.id} {...list}/>
+                          <List board={this.props.board} handleListChangeClient={this.handleListChangeClient} handleListChange={this.handleListChange} handleRemove={this.handleRemove} key={list.id} listid={list.id} {...list}/>
                         </div>
                       )}
                     </Draggable>
