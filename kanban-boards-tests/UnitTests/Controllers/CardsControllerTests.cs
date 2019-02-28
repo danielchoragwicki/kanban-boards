@@ -125,5 +125,38 @@ namespace kanban_boards_tests.UnitTests.Controllers
             Assert.IsNotNull(contentResult.Content);
             Assert.AreEqual(cardId, contentResult.Content.Id);
         }
+
+        [Test]
+        [TestCase(1)]
+        public void PutCard_ModelStateInvalid_ReturnBadRequest(int id)
+        {
+            _unitOfWork.Setup(unit => unit.Cards.Add(new Card() { Id = id, KanbanListId = 1 }));
+            _cardsController.ModelState.AddModelError("error", "error");
+            var actionResult = _cardsController.PutCard(id, new CardDTO() { Id = id, KanbanListId = 1 });
+
+            Assert.That(actionResult, Is.TypeOf<InvalidModelStateResult>());
+        }
+
+        [Test]
+        [TestCase(10)]
+        public void PutCard_IdIsDiffrentThanCardId_ReturnBadRequest(int id)
+        {
+            _unitOfWork.Setup(unit => unit.Cards.Add(new Card() { Id = 100, KanbanListId = 1 }));
+            var actionResult = _cardsController.PutCard(id, new CardDTO() { Id = 100, KanbanListId = 1 });
+
+            Assert.That(actionResult, Is.TypeOf<BadRequestResult>());
+        }
+
+        [Test]
+        [TestCase(51)]
+        public void PutCard_PutIsSuccessfull_ReturnStatusCodeNoContent(int id)
+        {
+            _unitOfWork.Setup(unit => unit.Cards.Add(new Card() { Id = id, KanbanListId = 1 }));
+            var actionResult = _cardsController.PutCard(id, new CardDTO() { Id = id, KanbanListId = 1 });
+            var contentResult = actionResult as StatusCodeResult;
+
+            Assert.That(contentResult, Is.Not.Null);
+            Assert.That(HttpStatusCode.NoContent, Is.EqualTo(contentResult.StatusCode));
+        }
     }
 }
