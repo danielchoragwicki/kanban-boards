@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using kanban_boards.Database;
 using kanban_boards.Models;
 using kanban_boards.UnitOfWork;
 using Moq;
@@ -47,10 +48,46 @@ namespace kanban_boards_tests.UnitTests.Controllers
         [Test]
         public void GetCard_CardIsFound_ReturnCard()
         {
-            _unitOfWork.Setup(unit => unit.Cards.Get(5)).Returns(new Card() { Id = 5 });
-            var result = _unitOfWork.Object.Cards.Get(5);
+            const int cardId = 5;
+            _unitOfWork.Setup(unit => unit.Cards.Get(cardId)).Returns(new Card() { Id = cardId });
+            var result = _unitOfWork.Object.Cards.Get(cardId);
 
             Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.TypeOf<Card>());
+            Assert.That(cardId, Is.EqualTo(result.Id));
+        }
+
+        [Test]
+        public void AddCard_WhenCalled_ReturnsTrue()
+        {
+            var cardMock = new Card() {Id = 5};
+            _unitOfWork.Setup(unit => unit.Cards.Add(cardMock));
+
+            _unitOfWork.Object.Cards.Add(cardMock);
+
+            _unitOfWork.Verify(unit => unit.Cards.Add(cardMock));
+        }
+
+        [Test]
+        public void PutCard_WhenCalled_ReturnTrue()
+        {
+            var cardMock = new Card() { Id = 5 };
+            _unitOfWork.Setup(unit => unit.Cards.Put(cardMock));
+
+            _unitOfWork.Object.Cards.Put(cardMock);
+
+            _unitOfWork.Verify(unit => unit.Cards.Put(cardMock));
+        }
+
+        [Test]
+        public void DeleteCard_WhenCalled_ReturnTrue()
+        {
+            var cardMock = new Card() { Id = 5 };
+            _unitOfWork.Setup(unit => unit.Cards.Delete(cardMock));
+
+            _unitOfWork.Object.Cards.Delete(cardMock);
+
+            _unitOfWork.Verify(unit => unit.Cards.Delete(cardMock));
         }
     }
 }
