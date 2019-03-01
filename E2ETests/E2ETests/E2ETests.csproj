@@ -67,6 +67,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KanbanBoardsTests.cs" />
+    <Compile Include="PageObjects\BoardPage.cs" />
+    <Compile Include="PageObjects\CardPage.cs" />
+    <Compile Include="PageObjects\LandingPage.cs" />
+    <Compile Include="MainTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
