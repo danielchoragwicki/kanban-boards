@@ -12,6 +12,10 @@ namespace E2ETests
     {
         [FindsBy(How = How.XPath, Using = "//*[@id='root']/div/div/div[1]/a")]
         public IWebElement Board { get; set; }
+        
+        [FindsBy(How = How.XPath, Using = "//*[@id='root']/div/div/div[2]/a")]
+        public IWebElement SecondBoard { get; set; }
+
         public LandingPage(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
